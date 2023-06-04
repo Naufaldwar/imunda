@@ -7,14 +7,158 @@ import variant2 from "../assets/varian2.png";
 import variant3 from "../assets/variant3.png";
 import variant4 from "../assets/variant4.png";
 import variant5 from "../assets/variant5.png";
-import ukuran from "../assets/ukuran.jpg";
+import variant6 from "../assets/variant6.jpg";
+import variant7 from "../assets/variant7.jpg";
+import variant8 from "../assets/variant8.jpg";
+import variant9 from "../assets/variant9.jpg";
+import variant10 from "../assets/variant10.jpg";
+import variant11 from "../assets/11.jpg";
+import variant12 from "../assets/12.jpg";
+import variant13 from "../assets/13.jpg";
+import variant14 from "../assets/14.jpg";
+import variant15 from "../assets/15.jpg";
+import ukuran1 from "../assets/ukuran.jpg";
+import ukuran2 from "../assets/ukuran2.jpg";
+import ukuran3 from "../assets/ukuran3.jpg";
+import ziya from "../assets/ziya.png";
+import alula from "../assets/alula.png";
 import wa from "../assets/iconwa.png";
 import { Button, Container, Divider, Flex, Text } from "@mantine/core";
 import Image from "next/image";
+import { useState } from "react";
+import { data } from "autoprefixer";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const data1 = {
+    id: "1",
+    name: "Shadira Dress",
+    description:
+      "Shadira dress hadir dengan desain dress 2 in 1 yang terdiri dari dress dan vest motif tartan (kotak-kotak). Gamis dalam terbuat dari bahan cey airflow dan vest bagian luar berbahan royal tartan. Bahan cey airflow merupakan bahan yang memiliki karakteristik tekstur crinkle, bahan yang jatuh, ironless, stretch, dan halus.Sedangkan vest bermotif kotak-kotak menggunakan bahan royal tartan yang lembut, jatuh, adem.",
+    price: "Rp. 250.000",
+    image: shadira,
+    variant: [
+      {
+        id: "1",
+        name: "Beige",
+        image: variant1,
+      },
+
+      {
+        id: "2",
+        name: "Black",
+        image: variant2,
+      },
+      {
+        id: "3",
+        name: "Deep Pink",
+        image: variant3,
+      },
+      {
+        id: "4",
+        name: "Mint",
+        image: variant4,
+      },
+      {
+        id: "5",
+        name: "Smoke Grey",
+        image: variant5,
+      },
+    ],
+    ukuran: ukuran1,
+  };
+  const data2 = {
+    id: "2",
+    name: "Ziya Simple Dress",
+    description:
+      "Ziya Dress menggunakan bahan Shakila, memiliki karakter adem, lembut, ringan, stretchy, jatuh, serat diagonal sehingga nyaman untuk aktifitas. Looknya cantik tapi tetap sederhana dan nyaman digunakan kemanapun",
+    price: "Rp. 250.000",
+    image: ziya,
+    variant: [
+      {
+        id: "1",
+        name: "Black",
+        image: variant6,
+      },
+
+      {
+        id: "2",
+        name: "Dusty Cream",
+        image: variant7,
+      },
+      {
+        id: "3",
+        name: "Mint",
+        image: variant8,
+      },
+      {
+        id: "4",
+        name: "Mocca",
+        image: variant9,
+      },
+      {
+        id: "5",
+        name: "Rose Brown",
+        image: variant10,
+      },
+    ],
+    ukuran: ukuran2,
+  };
+  const data3 = {
+    id: "3",
+    name: "Alula 3in1 Dress Korean dress with vest",
+    description:
+      "Alula 3in1 Dress Korean dress with vest menggunakan bahan Shakila, memiliki karakter adem, lembut, ringan, stretchy, jatuh, serat diagonal sehingga nyaman untuk aktifitas. Looknya cantik tapi tetap sederhana dan nyaman digunakan kemanapun",
+    price: "Rp. 250.000",
+    image: alula,
+    variant: [
+      {
+        id: "1",
+        name: "Ginger Bread",
+        image: variant11,
+      },
+      {
+        id: "2",
+        name: "Soft Purple",
+        image: variant12,
+      },
+      {
+        id: "3",
+        name: "Rose Brown",
+        image: variant13,
+      },
+      {
+        id: "4",
+        name: "Maroon",
+        image: variant14,
+      },
+      {
+        id: "5",
+        name: "Army",
+        image: variant15,
+      },
+    ],
+    ukuran: ukuran3,
+  };
+
+  const [dataProduk, setDataProduk] = useState(data1);
+  const handleClick1 = () => {
+    setDataProduk(data2);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+  const handleClick2 = () => {
+    setDataProduk(data1);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+  const handleClick3 = () => {
+    setDataProduk(data3);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  };
+
   return (
     <div>
       <Container size={"lg"} className="static">
@@ -34,7 +178,7 @@ export default function Home() {
         {/* Content Product */}
         <Flex justify={"center"}>
           <Text size="24px" fw={"bolder"} align="center">
-            🌸🌸 Shadira Dress 🌸🌸
+            🌸🌸 {dataProduk.name} 🌸🌸
           </Text>
         </Flex>
         <Flex
@@ -42,23 +186,19 @@ export default function Home() {
           // justify={"space-evenly"}
           className="flex flex-col md:flex-row justify-center items-center md:justify-evenly"
         >
-          <Image src={shadira} alt="shadira" className="md:h-full w-40" />
+          <Image
+            src={dataProduk.image}
+            alt="shadira"
+            className="md:h-full w-40"
+            // width={400}
+            // height={100}
+          />
           <Flex
             className="md:w-[500px] w-80 text-center md:text-justify"
             direction={"column"}
             gap={"lg"}
           >
-            <Text style={{ fontSize: "20px" }}>
-              Shadira dress hadir dengan desain dress 2 in 1 yang terdiri dari
-              dress dan vest motif tartan (kotak-kotak). Gamis dalam terbuat
-              dari bahan cey airflow dan vest bagian luar berbahan royal tartan.
-            </Text>
-            <Text style={{ fontSize: "20px" }}>
-              Bahan cey airflow merupakan bahan yang memiliki karakteristik
-              tekstur crinkle, bahan yang jatuh, ironless, stretch, dan halus.
-              Sedangkan vest bermotif kotak-kotak menggunakan bahan royal tartan
-              yang lembut, jatuh, adem.
-            </Text>
+            <Text style={{ fontSize: "20px" }}>{dataProduk.description}</Text>
           </Flex>
         </Flex>
         <Flex justify={"center"}>
@@ -71,51 +211,20 @@ export default function Home() {
           </Text>
         </Flex>
         <Flex gap={"md"} className="md:justify-evenly flex-col md:flex-row">
-          <Flex
-            my={"md"}
-            direction={"column"}
-            justify={"center"}
-            align={"center"}
-          >
-            <Image src={variant1} alt="shadira" height={400} />
-            <Text>Variant Beige</Text>
-          </Flex>
-          <Flex
-            my={"md"}
-            direction={"column"}
-            justify={"center"}
-            align={"center"}
-          >
-            <Image src={variant2} alt="shadira" height={400} />
-            <Text>Variant Black</Text>
-          </Flex>
-          <Flex
-            my={"md"}
-            direction={"column"}
-            justify={"center"}
-            align={"center"}
-          >
-            <Image src={variant3} alt="shadira" height={400} />
-            <Text>Variant Deep Pink</Text>
-          </Flex>
-          <Flex
-            my={"md"}
-            direction={"column"}
-            justify={"center"}
-            align={"center"}
-          >
-            <Image src={variant4} alt="shadira" height={400} />
-            <Text>Variant Mint</Text>
-          </Flex>
-          <Flex
-            my={"md"}
-            direction={"column"}
-            justify={"center"}
-            align={"center"}
-          >
-            <Image src={variant5} alt="shadira" height={400} />
-            <Text>Variant Smoke Grey</Text>
-          </Flex>
+          {dataProduk.variant.map((item) => (
+            <>
+              <Flex
+                my={"md"}
+                direction={"column"}
+                justify={"center"}
+                align={"center"}
+                key={item.id}
+              >
+                <Image src={item.image} alt="shadira" height={300} />
+                <Text>Variant {item.name}</Text>
+              </Flex>
+            </>
+          ))}
         </Flex>
         <Flex justify={"center"} mt={"lg"}>
           <Text
@@ -128,46 +237,67 @@ export default function Home() {
         </Flex>
         <Flex justify={"center"} mt={"lg"}>
           <Image
-            src={ukuran}
+            src={dataProduk.ukuran}
             alt="ukuran"
             className="md:w-[800px] w-80 rounded-xl md:rounded-3xl"
           />
         </Flex>
 
-        {/* <Divider my={"md"} /> */}
+        <Divider my={"md"} />
 
         {/* Produk Lainnya */}
-        {/* <Flex justify={"center"} mt={"lg"}>
-      <Text size="24px" fw={"bolder"} align="center">
-        Produk Lainnya
-      </Text>
-    </Flex> */}
-        {/* <Flex
-      mb={"lg"}
-      wrap={"wrap"}
-      gap={"md"}
-      justify={"center"}
-      align={"center"}
-    >
-      <Flex className="border w-80 h-80 flex-col rounded-xl p-3 justify-center items-center gap-2">
-        <Image src={shadira} alt="shadira" className="h-60 object-contain" />
-        <Text fz={"md"} fw={"bolder"}>
-          Shadira Dress 2in1
-        </Text>
-      </Flex>
-      <Flex className="border w-80 h-80 flex-col rounded-xl p-3 justify-center items-center gap-2">
-        <Image src={shadira} alt="shadira" className="h-60 object-contain" />
-        <Text fz={"md"} fw={"bolder"}>
-          Shadira Dress 2in1
-        </Text>
-      </Flex>
-      <Flex className="border w-80 h-80 flex-col rounded-xl p-3 justify-center items-center gap-2">
-        <Image src={shadira} alt="shadira" className="h-60 object-contain" />
-        <Text fz={"md"} fw={"bolder"}>
-          Shadira Dress 2in1
-        </Text>
-      </Flex>
-    </Flex> */}
+        <Flex justify={"center"} mt={"lg"}>
+          <Text size="24px" fw={"bolder"} align="center">
+            Produk Lainnya
+          </Text>
+        </Flex>
+        <Flex
+          mb={"lg"}
+          wrap={"wrap"}
+          gap={"md"}
+          justify={"center"}
+          align={"center"}
+        >
+          <Flex
+            onClick={handleClick1}
+            className="border w-80 h-80 flex-col rounded-xl p-3 justify-center items-center gap-2 hover:cursor-pointer hover:scale-105"
+          >
+            <Image
+              src={data2.image}
+              alt="shadira"
+              className="h-60 object-contain"
+            />
+            <Text fz={"md"} fw={"bolder"}>
+              {data2.name}
+            </Text>
+          </Flex>
+          <Flex
+            onClick={handleClick2}
+            className="border w-80 h-80 flex-col rounded-xl p-3 justify-center items-center gap-2 hover:cursor-pointer hover:scale-105"
+          >
+            <Image
+              src={data1.image}
+              alt="shadira"
+              className="h-60 object-contain"
+            />
+            <Text fz={"md"} fw={"bolder"}>
+              {data1.name}
+            </Text>
+          </Flex>
+          <Flex
+            onClick={handleClick3}
+            className="border w-80 h-80 flex-col rounded-xl p-3 justify-center items-center gap-2 hover:cursor-pointer hover:scale-105"
+          >
+            <Image
+              src={data3.image}
+              alt="shadira"
+              className="h-60 object-contain"
+            />
+            <Text fz={"md"} fw={"bolder"}>
+              {data3.name}
+            </Text>
+          </Flex>
+        </Flex>
         <a href="https://wa.me/6285246412783" target="_blank" rel="noreferrer">
           <Flex justify={"center"} align={"center"} my={"lg"}>
             <Button
