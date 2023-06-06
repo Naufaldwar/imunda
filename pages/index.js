@@ -347,7 +347,7 @@ export default function Home() {
             </Text>
           </Flex>
         </Flex>
-        <a href="https://wa.me/6285246412783" target="_blank" rel="noreferrer">
+        <a href="https://wa.me/6281215998499" target="_blank" rel="noreferrer">
           <Flex justify={"center"} align={"center"} my={"lg"}>
             <Button
               h={60}
