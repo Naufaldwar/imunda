@@ -360,6 +360,13 @@ export default function Home() {
             </Button>
           </Flex>
         </a>
+        <a
+          href="https://web.facebook.com/people/Imunda-Gamis/100092712523557/"
+          className="flex justify-center items-center hover:underline hover:text-blue-300 mb-10"
+          target="_blank"
+        >
+          <Text>Lihat Produk Lainnya di Halaman Kami{">>"}</Text>
+        </a>
       </Container>
     </div>
   );
