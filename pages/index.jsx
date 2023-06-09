@@ -31,13 +31,13 @@ import {
   Input,
   Modal,
   Radio,
+  Select,
   Text,
 } from "@mantine/core";
 import Image from "next/image";
-import { useState } from "react";
-import { data } from "autoprefixer";
+import { useEffect, useRef, useState } from "react";
 import { IconBookmarkFilled } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
+import axios from "axios";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -47,9 +47,9 @@ export default function Home() {
     name: "Shadira Dress",
     description:
       "Shadira dress hadir dengan desain dress 2 in 1 yang terdiri dari dress dan vest motif tartan (kotak-kotak). Gamis dalam terbuat dari bahan cey airflow dan vest bagian luar berbahan royal tartan. Bahan cey airflow merupakan bahan yang memiliki karakteristik tekstur crinkle, bahan yang jatuh, ironless, stretch, dan halus.Sedangkan vest bermotif kotak-kotak menggunakan bahan royal tartan yang lembut, jatuh, adem.",
-    pricetrought: "Rp. 350.000",
+    pricetrought: 350000,
     discount: "16%",
-    price: "Rp. 294.000",
+    price: 294000,
     image: shadira,
     variant: [
       {
@@ -86,9 +86,9 @@ export default function Home() {
     name: "Ziya Simple Dress",
     description:
       "Ziya Dress menggunakan bahan Shakila, memiliki karakter adem, lembut, ringan, stretchy, jatuh, serat diagonal sehingga nyaman untuk aktifitas. Looknya cantik tapi tetap sederhana dan nyaman digunakan kemanapun",
-    pricetrought: "Rp. 340.000",
+    pricetrought: 340000,
     discount: "12%",
-    price: "Rp. 299.200",
+    price: 299200,
     image: ziya,
     variant: [
       {
@@ -125,8 +125,8 @@ export default function Home() {
     name: "Alula 3in1 Dress Korean dress with vest",
     description:
       "Alula 3in1 Dress Korean dress with vest menggunakan bahan Shakila, memiliki karakter adem, lembut, ringan, stretchy, jatuh, serat diagonal sehingga nyaman untuk aktifitas. Looknya cantik tapi tetap sederhana dan nyaman digunakan kemanapun",
-    price: "Rp. 297.500",
-    pricetrought: "Rp. 350.000",
+    price: 297500,
+    pricetrought: 350000,
     discount: "15%",
     image: alula,
     variant: [
@@ -164,6 +164,22 @@ export default function Home() {
   const [dataProduk, setDataProduk] = useState(data1);
   const [opened, setOpened] = useState(false);
   const [opened2, setOpened2] = useState(false);
+  const [dataCity, setDataCity] = useState(null);
+  const [city, setCity] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [inputNameValue, setInputNameValue] = useState("");
+  const handleInputNameChange = (event) => {
+    setInputNameValue(event.currentTarget.value);
+  };
+
+  const [inputAddressValue, setInputAddressValue] = useState("");
+  const handleInputAddressChange = (event) => {
+    setInputAddressValue(event.currentTarget.value);
+  };
+  const [inputPhoneValue, setInputPhoneValue] = useState("");
+  const handleInputPhoneChange = (event) => {
+    setInputPhoneValue(event.currentTarget.value);
+  };
 
   const handleClick1 = () => {
     setDataProduk(data2);
@@ -178,6 +194,76 @@ export default function Home() {
     setOpened(true);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ongkir/city`
+        );
+        setDataCity(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const fetchCost = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ongkir/cost`,
+        {
+          key: "c989dc4c3d61abcf05738ce739f02750",
+          origin: 419,
+          destination: city,
+          weight: 600,
+          courier: "jne",
+        }
+      );
+      setCost(response.data[0]?.costs[0]?.cost[0]?.value);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCost = () => {
+    fetchCost();
+  };
+  const handleConfirm = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/list`,
+        {
+          name: inputNameValue,
+          city: city,
+          address: inputAddressValue,
+          phone: inputPhoneValue,
+          payment: payment,
+          name_product: dataProduk.name,
+          size: size,
+          variant: variant,
+          // cost: cost + dataProduk.price,
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const data = dataCity?.map((item) => {
+    return {
+      value: item.city_id,
+      label: item.type + " " + item.city_name,
+    };
+  });
+
+  const handlePrice = (number) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    }).format(number);
+  };
   return (
     <div>
       <Container size={"lg"} className="static">
@@ -214,9 +300,9 @@ export default function Home() {
           >
             <div className="relative flex flex-col justify-center items-center">
               <Flex gap={"md"} align={"start"}>
-                <p className="font-semibold">{dataProduk.price}</p>
+                <p className="font-semibold">{handlePrice(dataProduk.price)}</p>
                 <p className="line-through text-red-400">
-                  {dataProduk.pricetrought}
+                  {handlePrice(dataProduk.pricetrought)}
                 </p>
                 <IconBookmarkFilled
                   size={90}
@@ -270,7 +356,7 @@ export default function Home() {
                       direction={"column"}
                       justify={"center"}
                       align={"center"}
-                      key={item}
+                      key={item.id}
                       className="hover:cursor-pointer"
                     >
                       <Image
@@ -365,17 +451,35 @@ export default function Home() {
             <Text>Ukuran : {size}</Text>
             <Text>Variant : {variant}</Text>
             <Input.Wrapper label="Nama Lengkap" withAsterisk>
-              <Input id="input-name" placeholder="masukan nama anda" />
-            </Input.Wrapper>
-            <Input.Wrapper label="Alamat Lengkap" withAsterisk>
               <Input
                 id="input-name"
+                value={inputNameValue}
+                onChange={handleInputNameChange}
+                placeholder="masukan nama anda"
+              />
+            </Input.Wrapper>
+            <Select
+              value={city}
+              onChange={setCity}
+              data={data}
+              label="Pilih Kota"
+              withAsterisk
+              searchable
+              placeholder="pilih kota anda"
+            />
+            <Input.Wrapper label="Alamat Lengkap" withAsterisk>
+              <Input
+                id="input-address"
+                value={inputAddressValue}
+                onChange={handleInputAddressChange}
                 placeholder="masukan alamat lengkap anda"
               />
             </Input.Wrapper>
             <Input.Wrapper label="No.Whatsapp" withAsterisk>
               <Input
                 id="input-number"
+                value={inputPhoneValue}
+                onChange={handleInputPhoneChange}
                 placeholder="masukan nomor yang terhubung dengan whatsapp"
               />
             </Input.Wrapper>
@@ -389,7 +493,37 @@ export default function Home() {
               <Radio value="transfer" label="Transfer" color="red" />
               <Radio value="cod" label="COD" color="red" />
             </Radio.Group>
-            <Button className="bg-red-400 hover:bg-red-500">Konfirmasi</Button>
+
+            <Flex className="bg-white sticky bottom-1 p-3" direction={"column"}>
+              {city != null ? handleCost() : null}
+
+              {city != null ? <Text>Ongkir : {handlePrice(cost)} </Text> : null}
+              {city != null ? (
+                <Text>Total : {handlePrice(dataProduk.price + cost)} </Text>
+              ) : (
+                "-"
+              )}
+
+              <Button
+                disabled={
+                  inputNameValue == "" ||
+                  inputAddressValue == "" ||
+                  inputPhoneValue == "" ||
+                  city == null ||
+                  payment == ""
+                    ? true
+                    : false
+                }
+                onClick={handleConfirm}
+                className="bg-red-400 hover:bg-red-500 w-full"
+              >
+                Konfirmasi
+              </Button>
+              {}
+              <Text fz={"xs"} className="text-red-900">
+                *Pastikan data yang anda masukan sudah benar
+              </Text>
+            </Flex>
           </Flex>
         </Modal>
         {/* <Divider my={"md"} /> */}
