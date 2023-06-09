@@ -23,11 +23,21 @@ import ukuran3 from "../assets/ukuran3.jpg";
 import ziya from "../assets/ziya.png";
 import alula from "../assets/alula.png";
 import wa from "../assets/iconwa.png";
-import { Button, Container, Divider, Flex, Text } from "@mantine/core";
+import {
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Input,
+  Modal,
+  Radio,
+  Text,
+} from "@mantine/core";
 import Image from "next/image";
 import { useState } from "react";
 import { data } from "autoprefixer";
 import { IconBookmarkFilled } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -148,22 +158,24 @@ export default function Home() {
     ],
     ukuran: ukuran3,
   };
-
+  const [variant, setVariant] = useState("");
+  const [size, setSize] = useState("");
+  const [payment, setPayment] = useState("");
   const [dataProduk, setDataProduk] = useState(data1);
+  const [opened, setOpened] = useState(false);
+  const [opened2, setOpened2] = useState(false);
+
   const handleClick1 = () => {
     setDataProduk(data2);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    setOpened(true);
   };
   const handleClick2 = () => {
     setDataProduk(data1);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    setOpened(true);
   };
   const handleClick3 = () => {
     setDataProduk(data3);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    setOpened(true);
   };
 
   return (
@@ -183,100 +195,209 @@ export default function Home() {
         <Divider my={"md"} />
 
         {/* Content Product */}
-        <Flex justify={"center"}>
-          <Text size="24px" fw={"bolder"} align="center">
-            🌸🌸 {dataProduk.name} 🌸🌸
-          </Text>
-        </Flex>
-        <Flex
-          my={"32px"}
-          // justify={"space-evenly"}
-          className="flex flex-col md:flex-row justify-center items-center md:justify-evenly"
+        <Modal
+          opened={opened}
+          onClose={() => {
+            setOpened(false);
+          }}
+          size={"70%"}
         >
-          <div className="relative">
-            <Flex gap={"md"} align={"start"}>
-              <p className="font-semibold">{dataProduk.price}</p>
-              <p className="line-through text-red-400">
-                {dataProduk.pricetrought}
-              </p>
-              <IconBookmarkFilled
-                size={90}
-                textAnchor="asdas"
-                className="text-red-600"
-              />
-              <p className="absolute right-7 top-7 text-white font-semibold">
-                -{dataProduk.discount}
-              </p>
-            </Flex>
-            <Image
-              src={dataProduk.image}
-              alt="shadira"
-              className="md:h-full w-40"
-              // width={400}
-              // height={100}
-            />
-          </div>
-          <Flex
-            className="md:w-[500px] w-80 text-center md:text-justify"
-            direction={"column"}
-            gap={"lg"}
-          >
-            <Text style={{ fontSize: "20px" }}>{dataProduk.description}</Text>
+          <Flex justify={"center"}>
+            <Text size="24px" fw={"bolder"} align="center">
+              🌸🌸 {dataProduk.name} 🌸🌸
+            </Text>
           </Flex>
-        </Flex>
-        <Flex justify={"center"}>
-          <Text
-            size="24px"
-            align="center"
-            className="underline-offset-auto underline"
+          <Flex
+            my={"32px"}
+            // justify={"space-evenly"}
+            className="flex flex-col md:flex-row justify-center items-center md:justify-evenly"
           >
-            Variant
-          </Text>
-        </Flex>
-        <Flex gap={"md"} className="md:justify-evenly flex-col md:flex-row">
-          {dataProduk.variant.map((item) => (
-            <>
-              <Flex
-                my={"md"}
-                direction={"column"}
-                justify={"center"}
-                align={"center"}
-                key={item.id}
-              >
-                <Image
-                  src={item.image}
-                  alt="shadira"
-                  height={300}
-                  className="hover:scale-110"
+            <div className="relative flex flex-col justify-center items-center">
+              <Flex gap={"md"} align={"start"}>
+                <p className="font-semibold">{dataProduk.price}</p>
+                <p className="line-through text-red-400">
+                  {dataProduk.pricetrought}
+                </p>
+                <IconBookmarkFilled
+                  size={90}
+                  textAnchor="asdas"
+                  className="text-red-600"
                 />
-                <Text>Variant {item.name}</Text>
+                <p className="absolute right-7 top-7 text-white font-semibold">
+                  -{dataProduk.discount}
+                </p>
               </Flex>
-            </>
-          ))}
-        </Flex>
-        <Flex justify={"center"} mt={"lg"}>
-          <Text
-            size="24px"
-            align="center"
-            className="underline-offset-auto underline"
+              <Image
+                src={dataProduk.image}
+                alt="shadira"
+                className="md:h-full w-40"
+                // width={400}
+                // height={100}
+              />
+            </div>
+            <Flex
+              className="md:w-[500px] w-80 text-center md:text-justify"
+              direction={"column"}
+              gap={"lg"}
+            >
+              <Text style={{ fontSize: "20px" }}>{dataProduk.description}</Text>
+            </Flex>
+          </Flex>
+          <Flex justify={"center"}>
+            <Text
+              size="24px"
+              align="center"
+              className="underline-offset-auto underline"
+            >
+              Variant
+            </Text>
+          </Flex>
+          <Text>Pilih Variant : </Text>
+          <Radio.Group
+            value={variant}
+            onChange={setVariant}
+            gap={"md"}
+            className="md:justify-evenly flex-col md:flex-row md:flex"
           >
-            Ukuran
+            {dataProduk.variant.map((item) => (
+              <>
+                <Radio
+                  color="red"
+                  value={item.name}
+                  label={
+                    <Flex
+                      my={"md"}
+                      direction={"column"}
+                      justify={"center"}
+                      align={"center"}
+                      key={item}
+                      className="hover:cursor-pointer"
+                    >
+                      <Image
+                        src={item.image}
+                        alt="shadira"
+                        height={300}
+                        className="hover:scale-110"
+                      />
+                      <Text fz="10px">Variant {item.name}</Text>
+                    </Flex>
+                  }
+                />
+              </>
+            ))}
+          </Radio.Group>
+          <Text className="text-slate-500" fz={"10px"} w={300}>
+            *Warna yang tampil di foto mungkin berbeda dengan warna asli karena
+            efek cahaya atau pengaturan tampilan monitor atau hp yang digunakan
+            oleh pembeli
           </Text>
-        </Flex>
-        <Flex justify={"center"} mt={"lg"}>
-          <Image
-            src={dataProduk.ukuran}
-            alt="ukuran"
-            className="md:w-[800px] w-80 rounded-xl md:rounded-3xl"
-          />
-        </Flex>
+          <Flex justify={"center"} mt={"lg"}>
+            <Text
+              size="24px"
+              align="center"
+              className="underline-offset-auto underline"
+            >
+              Ukuran
+            </Text>
+          </Flex>
+          <Text>Pilih Ukuran : </Text>
+          <Radio.Group value={size} onChange={setSize} className="flex gap-4">
+            <Radio
+              value="S"
+              label={<Text className="hover:cursor-pointer">S</Text>}
+              color="red"
+            />
+            <Radio
+              value="AS"
+              label={<Text className="hover:cursor-pointer">AS</Text>}
+              color="red"
+            />
+            <Radio
+              value="XL"
+              label={<Text className="hover:cursor-pointer">XL</Text>}
+              color="red"
+            />
+          </Radio.Group>
+          <Flex justify={"center"} mt={"lg"}>
+            <Image
+              src={dataProduk.ukuran}
+              alt="ukuran"
+              className="md:w-[800px] w-80 rounded-xl md:rounded-3xl"
+            />
+          </Flex>
 
-        <Divider my={"md"} />
+          <Flex className="bg-white py-4 sticky bottom-0 justify-end gap-4 items-end">
+            {size == "" || variant == "" ? (
+              <Text fz={"xs"} color="grey">
+                <span className="text-red-900">*</span>Silahkan pilih ukuran dan
+                variant terlebih dahulu
+              </Text>
+            ) : (
+              ""
+            )}
+            <Button
+              className="bg-red-400 hover:bg-red-500"
+              disabled={size != "" && variant != "" ? false : true}
+              onClick={() => {
+                setOpened(false);
+                setOpened2(true);
+              }}
+            >
+              Checkout
+            </Button>
+          </Flex>
+        </Modal>
+        <Modal
+          opened={opened2}
+          onClose={() => {
+            setOpened2(false);
+            setOpened(true);
+          }}
+          title={
+            <Text fw={"bolder"} fz={"lg"}>
+              Konfirmasi Pesanan
+            </Text>
+          }
+        >
+          <Flex className="flex flex-col gap-4">
+            <Text>Nama Produk : {dataProduk.name}</Text>
+            <Text>Harga : {dataProduk.price}</Text>
+            <Text>Ukuran : {size}</Text>
+            <Text>Variant : {variant}</Text>
+            <Input.Wrapper label="Nama Lengkap" withAsterisk>
+              <Input id="input-name" placeholder="masukan nama anda" />
+            </Input.Wrapper>
+            <Input.Wrapper label="Alamat Lengkap" withAsterisk>
+              <Input
+                id="input-name"
+                placeholder="masukan alamat lengkap anda"
+              />
+            </Input.Wrapper>
+            <Input.Wrapper label="No.Whatsapp" withAsterisk>
+              <Input
+                id="input-number"
+                placeholder="masukan nomor yang terhubung dengan whatsapp"
+              />
+            </Input.Wrapper>
+            <Radio.Group
+              withAsterisk
+              value={payment}
+              onChange={setPayment}
+              label="Pilih Metode Pembayaran"
+              className="flex flex-col gap-2"
+            >
+              <Radio value="transfer" label="Transfer" color="red" />
+              <Radio value="cod" label="COD" color="red" />
+            </Radio.Group>
+            <Button className="bg-red-400 hover:bg-red-500">Konfirmasi</Button>
+          </Flex>
+        </Modal>
+        {/* <Divider my={"md"} /> */}
 
         {/* Produk Lainnya */}
         <Flex justify={"center"} mt={"lg"}>
           <Text size="24px" fw={"bolder"} align="center">
-            Best Seller
+            Our Product
           </Text>
         </Flex>
         <Flex
