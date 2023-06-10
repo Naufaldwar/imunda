@@ -38,6 +38,16 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { IconBookmarkFilled } from "@tabler/icons-react";
 import axios from "axios";
+import {
+  PDFDownloadLink,
+  Page,
+  Text as PDFText,
+  View,
+  Document,
+  StyleSheet,
+} from "@react-pdf/renderer";
+
+// Define the PDF document component
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -164,6 +174,7 @@ export default function Home() {
   const [dataProduk, setDataProduk] = useState(data1);
   const [opened, setOpened] = useState(false);
   const [opened2, setOpened2] = useState(false);
+  const [openedSuccess, setOpenedSuccess] = useState(false);
   const [dataCity, setDataCity] = useState(null);
   const [city, setCity] = useState(null);
   const [cost, setCost] = useState(null);
@@ -213,7 +224,7 @@ export default function Home() {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_ENDPOINT}/ongkir/cost`,
         {
-          key: "c989dc4c3d61abcf05738ce739f02750",
+          key: "d64e10d757bd8868de50234fd1df0d00",
           origin: 419,
           destination: city,
           weight: 600,
@@ -242,10 +253,13 @@ export default function Home() {
           name_product: dataProduk.name,
           size: size,
           variant: variant,
-          // cost: cost + dataProduk.price,
+          total_cost: cost + dataProduk.price,
         }
       );
       console.log(response);
+      setOpened(false);
+      setOpened2(false);
+      setOpenedSuccess(true);
     } catch (error) {
       console.error(error);
     }
@@ -264,6 +278,53 @@ export default function Home() {
       currency: "IDR",
     }).format(number);
   };
+
+  const [isComponentAvailable, setComponentAvailability] = useState(false);
+
+  useEffect(() => {
+    setComponentAvailability(true);
+  }, []);
+
+  const MyDocument = ({
+    name,
+    address,
+    city,
+    phone,
+    name_product,
+    size,
+    variant,
+    payment,
+    cost,
+  }) => (
+    <Document>
+      <Page>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            justifyContent: "center",
+            alignContent: "center",
+            textAlign: "center",
+          }}
+        >
+          <PDFText style={{ fontSize: "24px", textDecoration: "underline" }}>
+            Invoice
+          </PDFText>
+          <PDFText>Nama Pemesan : {name}</PDFText>
+          <PDFText>Alamat : {address}</PDFText>
+          <PDFText>Kota : {city}</PDFText>
+          <PDFText>No. HP : {phone}</PDFText>
+          <PDFText>Nama Produk : {name_product}</PDFText>
+          <PDFText>Ukuran : {size}</PDFText>
+          <PDFText>Varian : {variant}</PDFText>
+          <PDFText>Pembayaran : {payment}</PDFText>
+          <PDFText>Total Harga : {cost}</PDFText>
+        </View>
+      </Page>
+    </Document>
+  );
+
   return (
     <div>
       <Container size={"lg"} className="static">
@@ -276,7 +337,7 @@ export default function Home() {
         >
           <Image src={logo} alt="logo" className="w-60 md:w-80" />
           <Text size="24px">Fashion Muslimah Trenndi</Text>
-          <Image src={hero} alt="hero" className="w-[700px]" />
+          <Image src={hero} alt="hero" className="w-full md:w-1/2" />
         </Flex>
         <Divider my={"md"} />
 
@@ -286,7 +347,7 @@ export default function Home() {
           onClose={() => {
             setOpened(false);
           }}
-          size={"70%"}
+          size={"xl"}
         >
           <Flex justify={"center"}>
             <Text size="24px" fw={"bolder"} align="center">
@@ -295,7 +356,6 @@ export default function Home() {
           </Flex>
           <Flex
             my={"32px"}
-            // justify={"space-evenly"}
             className="flex flex-col md:flex-row justify-center items-center md:justify-evenly"
           >
             <div className="relative flex flex-col justify-center items-center">
@@ -317,8 +377,6 @@ export default function Home() {
                 src={dataProduk.image}
                 alt="shadira"
                 className="md:h-full w-40"
-                // width={400}
-                // height={100}
               />
             </div>
             <Flex
@@ -346,30 +404,29 @@ export default function Home() {
             className="md:justify-evenly flex-col md:flex-row md:flex"
           >
             {dataProduk.variant.map((item) => (
-              <>
-                <Radio
-                  color="red"
-                  value={item.name}
-                  label={
-                    <Flex
-                      my={"md"}
-                      direction={"column"}
-                      justify={"center"}
-                      align={"center"}
-                      key={item.id}
-                      className="hover:cursor-pointer"
-                    >
-                      <Image
-                        src={item.image}
-                        alt="shadira"
-                        height={300}
-                        className="hover:scale-110"
-                      />
-                      <Text fz="10px">Variant {item.name}</Text>
-                    </Flex>
-                  }
-                />
-              </>
+              <Radio
+                key={item.name}
+                color="red"
+                value={item.name}
+                label={
+                  <Flex
+                    my={"md"}
+                    direction={"column"}
+                    justify={"center"}
+                    align={"center"}
+                    key={item.name}
+                    className="hover:cursor-pointer"
+                  >
+                    <Image
+                      src={item.image}
+                      alt="shadira"
+                      height={"auto"}
+                      className="hover:scale-110"
+                    />
+                    <Text fz="10px">Variant {item.name}</Text>
+                  </Flex>
+                }
+              />
             ))}
           </Radio.Group>
           <Text className="text-slate-500" fz={"10px"} w={300}>
@@ -447,7 +504,7 @@ export default function Home() {
         >
           <Flex className="flex flex-col gap-4">
             <Text>Nama Produk : {dataProduk.name}</Text>
-            <Text>Harga : {dataProduk.price}</Text>
+            <Text>Harga : {handlePrice(dataProduk.price)}</Text>
             <Text>Ukuran : {size}</Text>
             <Text>Variant : {variant}</Text>
             <Input.Wrapper label="Nama Lengkap" withAsterisk>
@@ -458,15 +515,17 @@ export default function Home() {
                 placeholder="masukan nama anda"
               />
             </Input.Wrapper>
-            <Select
-              value={city}
-              onChange={setCity}
-              data={data}
-              label="Pilih Kota"
-              withAsterisk
-              searchable
-              placeholder="pilih kota anda"
-            />
+            {!city && (
+              <Select
+                value={city}
+                onChange={setCity}
+                data={data}
+                label="Pilih Kota"
+                withAsterisk
+                searchable
+                placeholder="pilih kota anda"
+              />
+            )}
             <Input.Wrapper label="Alamat Lengkap" withAsterisk>
               <Input
                 id="input-address"
@@ -526,7 +585,64 @@ export default function Home() {
             </Flex>
           </Flex>
         </Modal>
-        {/* <Divider my={"md"} /> */}
+        <Modal
+          opened={openedSuccess}
+          onClose={() => {
+            setOpenedSuccess(false);
+          }}
+          centered
+        >
+          {/* make modal success */}
+          <Flex className="flex flex-col gap-4 text-center">
+            <Text className="text-green-500 text-center text-2xl">
+              Pesanan Berhasil!!
+            </Text>
+            <Text>
+              Selamat pesanan anda berhasil dibuat, kami akan memproses
+              pengiriman secepatnya, pihak kami akan menghubungi terkait
+              pembayaran dan pengiriman nomor resi, Terimakasih{" "}
+            </Text>
+            {isComponentAvailable && (
+              <PDFDownloadLink
+                document={
+                  <MyDocument
+                    name={inputNameValue}
+                    address={inputAddressValue}
+                    city={city}
+                    phone={inputPhoneValue}
+                    payment={payment}
+                    cost={handlePrice(cost + dataProduk.price)}
+                    name_product={dataProduk.name}
+                    size={size}
+                    variant={variant}
+                  />
+                }
+                fileName="example.pdf"
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? (
+                    "Loading document..."
+                  ) : (
+                    <Text
+                      className="underline underline-offset-1 text-red-300 hover:cursor-pointer hover:text-slate-400"
+                      fz={"xs"}
+                    >
+                      Download detail pesanan
+                    </Text>
+                  )
+                }
+              </PDFDownloadLink>
+            )}
+            {/* <a href="/PDFPage">
+              <Text
+                className="underline underline-offset-1 text-red-300 hover:cursor-pointer hover:text-slate-400"
+                fz={"xs"}
+              >
+                Download detail pesanan
+              </Text>
+            </a> */}
+          </Flex>
+        </Modal>
 
         {/* Produk Lainnya */}
         <Flex justify={"center"} mt={"lg"}>
@@ -555,7 +671,7 @@ export default function Home() {
             <Image
               src={data2.image}
               alt="shadira"
-              className="h-60 object-contain"
+              className="w-auto h-48 object-contain"
             />
             <Text fz={"md"} fw={"bolder"}>
               {data2.name}
@@ -575,7 +691,7 @@ export default function Home() {
             <Image
               src={data1.image}
               alt="shadira"
-              className="h-60 object-contain"
+              className="w-auto h-48 object-contain"
             />
             <Text fz={"md"} fw={"bolder"}>
               {data1.name}
@@ -595,14 +711,14 @@ export default function Home() {
             <Image
               src={data3.image}
               alt="shadira"
-              className="h-60 object-contain"
+              className="w-auto h-48 fit-contain"
             />
             <Text fz={"md"} fw={"bolder"}>
               {data3.name}
             </Text>
           </Flex>
         </Flex>
-        <a href="https://wa.me/6281215998499" target="_blank" rel="noreferrer">
+        {/* <a href="https://wa.me/6281215998499" target="_blank" rel="noreferrer">
           <Flex justify={"center"} align={"center"} my={"lg"}>
             <Button
               h={60}
@@ -614,7 +730,7 @@ export default function Home() {
               <Text size="20px">Order via Whatsapp</Text>
             </Button>
           </Flex>
-        </a>
+        </a> */}
         <a
           href="https://web.facebook.com/people/Imunda-Gamis/100092712523557/"
           className="flex justify-center items-center hover:underline hover:text-blue-300 mb-10"
