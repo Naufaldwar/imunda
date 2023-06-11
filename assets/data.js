@@ -20,7 +20,7 @@ import ukuran3 from "../assets/ukuran3.jpg";
 import ziya from "../assets/ziya.png";
 import alula from "../assets/alula.png";
 
-export const data1 = {
+const data1 = {
   id: "1",
   name: "Shadira Dress",
   description:
@@ -59,7 +59,7 @@ export const data1 = {
   ],
   ukuran: ukuran1,
 };
-export const data2 = {
+const data2 = {
   id: "2",
   name: "Ziya Simple Dress",
   description:
@@ -98,7 +98,7 @@ export const data2 = {
   ],
   ukuran: ukuran2,
 };
-export const data3 = {
+const data3 = {
   id: "3",
   name: "Alula 3in1 Dress Korean dress with vest",
   description:
@@ -136,3 +136,5 @@ export const data3 = {
   ],
   ukuran: ukuran3,
 };
+
+export { data1, data2, data3 };

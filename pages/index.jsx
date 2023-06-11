@@ -27,9 +27,7 @@ import {
 } from "@react-pdf/renderer";
 
 // const inter = Inter({ subsets: ["latin"] });
-import { data1 } from "./data";
-import { data2 } from "./data";
-import { data3 } from "./data";
+import { data1, data2, data3 } from "../assets/data";
 import { Card } from "@/components/Card";
 export default function Home() {
   const productData = [data1, data2, data3];
