@@ -27,10 +27,10 @@ import {
 } from "@react-pdf/renderer";
 
 // const inter = Inter({ subsets: ["latin"] });
-import { data1, data2, data3, data4 } from "../assets/data";
+import { data1, data2, data3, data4, data5, data6 } from "../assets/data";
 import { Card } from "@/components/Card";
 export default function Home() {
-  const productData = [data1, data2, data3, data4];
+  const productData = [data1, data2, data3, data4, data5, data6];
   const [variant, setVariant] = useState("");
   const [size, setSize] = useState("");
   const [payment, setPayment] = useState("");
@@ -216,8 +216,8 @@ export default function Home() {
                 🌸🌸 {dataProduk.name} 🌸🌸
               </Text>
             </Flex>
-            <Flex className="my-4 md:my-4 flex flex-col md:flex-row justify-center items-center md:justify-evenly">
-              <div className="relative flex flex-col w-full justify-center items-center">
+            <Flex className="my-4 md:my-4 flex flex-col md:flex-row justify-center items-center">
+              <div className="relative flex flex-col w-2/3 justify-center items-center">
                 <Flex gap={"md"} align={"start"}>
                   <p className="text-xs md:text-base font-semibold">
                     {handlePrice(dataProduk.price)}
@@ -284,7 +284,7 @@ export default function Home() {
                         src={item.image}
                         alt="shadira"
                         height={"auto"}
-                        className="hover:scale-110 w-14 h-auto"
+                        className="hover:scale-110 w-28 h-auto"
                       />
                       <Text fz="10px">Variant {item.name}</Text>
                     </Flex>
@@ -306,28 +306,65 @@ export default function Home() {
               </Text>
             </Flex>
             <Text className="text-xs md:text-base my-2">Pilih Ukuran : </Text>
-            <Radio.Group
-              value={size}
-              onChange={setSize}
-              className="flex gap-4 text-xs"
-              size=""
-            >
-              <Radio
-                value="S"
-                label={<Text className="hover:cursor-pointer">S</Text>}
-                color="red"
-              />
-              <Radio
-                value="AS"
-                label={<Text className="hover:cursor-pointer">AS</Text>}
-                color="red"
-              />
-              <Radio
-                value="XL"
-                label={<Text className="hover:cursor-pointer">XL</Text>}
-                color="red"
-              />
-            </Radio.Group>
+            {dataProduk.name === "Mecca Dress Anak" ||
+            dataProduk.name === "Beena Bergo Kids" ||
+            dataProduk.name === "Mecca Koko Kids" ? (
+              <Radio.Group
+                value={size}
+                onChange={setSize}
+                className="flex gap-4 text-xs"
+                size=""
+              >
+                <Radio
+                  value="1"
+                  label={<Text className="hover:cursor-pointer">1</Text>}
+                  color="red"
+                />
+                <Radio
+                  value="2"
+                  label={<Text className="hover:cursor-pointer">2</Text>}
+                  color="red"
+                />
+                <Radio
+                  value="4"
+                  label={<Text className="hover:cursor-pointer">4</Text>}
+                  color="red"
+                />
+                <Radio
+                  value="6"
+                  label={<Text className="hover:cursor-pointer">6</Text>}
+                  color="red"
+                />
+                <Radio
+                  value="10"
+                  label={<Text className="hover:cursor-pointer">10</Text>}
+                  color="red"
+                />
+              </Radio.Group>
+            ) : (
+              <Radio.Group
+                value={size}
+                onChange={setSize}
+                className="flex gap-4 text-xs"
+                size=""
+              >
+                <Radio
+                  value="S"
+                  label={<Text className="hover:cursor-pointer">S</Text>}
+                  color="red"
+                />
+                <Radio
+                  value="AS"
+                  label={<Text className="hover:cursor-pointer">AS</Text>}
+                  color="red"
+                />
+                <Radio
+                  value="XL"
+                  label={<Text className="hover:cursor-pointer">XL</Text>}
+                  color="red"
+                />
+              </Radio.Group>
+            )}
             <Flex justify={"center"} mt={"lg"}>
               <Image
                 src={dataProduk.ukuran}
@@ -508,7 +545,7 @@ export default function Home() {
           mb={"lg"}
           wrap={"wrap"}
           gap={"md"}
-          className="flex justify-start items-center"
+          className="flex justify-center sm:justify-start items-center"
         >
           {productData.map((item, index) => (
             <div key={index} onClick={() => handleClick(item)}>

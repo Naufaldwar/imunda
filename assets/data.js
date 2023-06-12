@@ -26,6 +26,20 @@ import variant17 from "../assets/variant17.jpg";
 import variant18 from "../assets/variant18.jpg";
 import variant19 from "../assets/variant19.jpg";
 import ukuran4 from "../assets/ukuran4.jpg";
+import ukuran5 from "../assets/ukuran5.jpg";
+import variant20 from "../assets/20.jpg";
+import variant21 from "../assets/21.jpg";
+import variant22 from "../assets/22.jpg";
+import variant23 from "../assets/23.jpg";
+import variant24 from "../assets/24.jpg";
+import mecca from "../assets/mecca.jpg";
+import variant25 from "../assets/25.jpg";
+import variant26 from "../assets/26.jpg";
+import variant27 from "../assets/27.jpg";
+import variant28 from "../assets/28.jpg";
+import variant29 from "../assets/29.jpg";
+import ukuran6 from "../assets/ukuran6.jpg";
+import meccako from "../assets/meccako.jpg";
 
 const data1 = {
   id: "1",
@@ -176,5 +190,81 @@ const data4 = {
   ],
   ukuran: ukuran4,
 };
+const data5 = {
+  id: "5",
+  name: "Mecca Dress Kids",
+  description:
+    "Mecca Family set ini menggunakan bahan Forta kombinasi dengan Ceruti terbaik dikelasnya, memiliki karakteristik bahan yang lembut, tebal, tidak kaku, jatuh dan sangat flowy, tidak menerawang, adem sehingga sangat nyaman dikenakan seharian full. ",
+  price: 150000,
+  pricetrought: 20000,
+  discount: "25%",
+  image: mecca,
+  variant: [
+    {
+      id: "1",
+      name: "Milo",
+      image: variant20,
+    },
+    {
+      id: "2",
+      name: "Army",
+      image: variant21,
+    },
+    {
+      id: "3",
+      name: "Ginger Bread",
+      image: variant22,
+    },
+    {
+      id: "4",
+      name: "Denim",
+      image: variant23,
+    },
+    {
+      id: "5",
+      name: "Dark Grey",
+      image: variant24,
+    },
+  ],
+  ukuran: ukuran5,
+};
+const data6 = {
+  id: "6",
+  name: "Mecca Koko Kids",
+  description:
+    "Mecca Family set ini menggunakan bahan Forta kombinasi dengan Ceruti terbaik dikelasnya, memiliki karakteristik bahan yang lembut, tebal, tidak kaku, jatuh dan sangat flowy, tidak menerawang, adem sehingga sangat nyaman dikenakan seharian full. ",
+  price: 150000,
+  pricetrought: 20000,
+  discount: "25%",
+  image: meccako,
+  variant: [
+    {
+      id: "1",
+      name: "Milo",
+      image: variant25,
+    },
+    {
+      id: "2",
+      name: "Army",
+      image: variant26,
+    },
+    {
+      id: "3",
+      name: "Ginger Bread",
+      image: variant28,
+    },
+    {
+      id: "4",
+      name: "Denim",
+      image: variant27,
+    },
+    {
+      id: "5",
+      name: "Dark Grey",
+      image: variant29,
+    },
+  ],
+  ukuran: ukuran6,
+};
 
-export { data1, data2, data3, data4 };
+export { data1, data2, data3, data4, data5, data6 };

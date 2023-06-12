@@ -59,7 +59,6 @@ export default function Dashboard() {
         }
       );
       console.log(response);
-      // setChecked(true);
       const newData = data.map((item) => {
         if (item._id === response.data._id) {
           return {
