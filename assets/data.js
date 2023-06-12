@@ -19,6 +19,13 @@ import ukuran2 from "../assets/ukuran2.jpg";
 import ukuran3 from "../assets/ukuran3.jpg";
 import ziya from "../assets/ziya.png";
 import alula from "../assets/alula.png";
+import yumi from "../assets/yumi.jpg";
+import beena from "../assets/beena.jpg";
+import variant16 from "../assets/variant16.jpg";
+import variant17 from "../assets/variant17.jpg";
+import variant18 from "../assets/variant18.jpg";
+import variant19 from "../assets/variant19.jpg";
+import ukuran4 from "../assets/ukuran4.jpg";
 
 const data1 = {
   id: "1",
@@ -65,8 +72,8 @@ const data2 = {
   description:
     "Ziya Dress menggunakan bahan Shakila, memiliki karakter adem, lembut, ringan, stretchy, jatuh, serat diagonal sehingga nyaman untuk aktifitas. Looknya cantik tapi tetap sederhana dan nyaman digunakan kemanapun",
   pricetrought: 340000,
-  discount: "12%",
-  price: 299200,
+  discount: "41%",
+  price: 199500,
   image: ziya,
   variant: [
     {
@@ -103,9 +110,9 @@ const data3 = {
   name: "Alula 3in1 Dress Korean dress with vest",
   description:
     "Alula 3in1 Dress Korean dress with vest menggunakan bahan Shakila, memiliki karakter adem, lembut, ringan, stretchy, jatuh, serat diagonal sehingga nyaman untuk aktifitas. Looknya cantik tapi tetap sederhana dan nyaman digunakan kemanapun",
-  price: 297500,
+  price: 270000,
   pricetrought: 350000,
-  discount: "15%",
+  discount: "22%",
   image: alula,
   variant: [
     {
@@ -136,5 +143,38 @@ const data3 = {
   ],
   ukuran: ukuran3,
 };
+const data4 = {
+  id: "4",
+  name: "Beena Bergo Kids",
+  description:
+    "Say Hi to Benna Bergo! 🥰Baca caption sampai selesai ya 🥺Bahan : Queen Jasmine Karakternya ringan, adem, super flowy, lebih jatuh dan gramasinya lebih tebal dari ceruty sehingga tidak terawang, kelebihan dari bahan ini yaitu cepat kering.Bina bergo didesain dengan potongan pada bagian depan bawah bergo yang sedikit meruncing. Dipermanis dengan tali pada bagian samping kiri dan kanan kepala.",
+  price: 35200,
+  pricetrought: 55000,
+  discount: "36%",
+  image: beena,
+  variant: [
+    {
+      id: "1",
+      name: "Army",
+      image: variant16,
+    },
+    {
+      id: "2",
+      name: "Nude",
+      image: variant17,
+    },
+    {
+      id: "3",
+      name: "Black",
+      image: variant18,
+    },
+    {
+      id: "4",
+      name: "Mint",
+      image: variant19,
+    },
+  ],
+  ukuran: ukuran4,
+};
 
-export { data1, data2, data3 };
+export { data1, data2, data3, data4 };
