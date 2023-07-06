@@ -5,17 +5,17 @@ import { useRouter } from "next/router";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
-  useEffect(() => {
-    import("react-facebook-pixel")
-      .then((x) => x.default)
-      .then((ReactPixel) => {
-        ReactPixel.init("727654749134480"); // facebookPixelId
-        ReactPixel.pageView();
+  // useEffect(() => {
+  //   import("react-facebook-pixel")
+  //     .then((x) => x.default)
+  //     .then((ReactPixel) => {
+  //       ReactPixel.init("727654749134480"); // facebookPixelId
+  //       ReactPixel.pageView();
 
-        router.events.on("routeChangeComplete", () => {
-          ReactPixel.pageView();
-        });
-      });
-  }, [router.events]);
+  //       router.events.on("routeChangeComplete", () => {
+  //         ReactPixel.pageView();
+  //       });
+  //     });
+  // }, [router.events]);
   return <Component {...pageProps} />;
 }
